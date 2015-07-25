@@ -31,7 +31,9 @@ ME="`whoami`"
 #PWD="`pwd`"
 
 mine_user() {
-    su - ${usern} -s /bin/bash -c "$1"
+#   su - ${usern} -s /bin/bash -c "$1"
+## ^-- is broken with with my methods just make script run as mine user.
+    /bin/bash -c "$1"    
 }
 
 game_start() {
