@@ -20,15 +20,9 @@ screenNAME="scarcityfree-init"
 options='nogui'
 usern="mine"
 WORLD="survival"
-BUKKPATH='/home/mine/minerscraft/run/'
-#BACKUPPATH='/home/mine/
 MAXHEAP=1300
 MINHEAP=1300
-liness=1000
-CPU_COUNT=1
 RUNME='java -Xmx${MAXHEAP}M -Xms${MINHEAP}M -jar ${buckloc} ${options}'
-ME="`whoami`"
-#PWD="`pwd`"
 
 mine_user() {
 #   su - ${usern} -s /bin/bash -c "$1"
@@ -42,7 +36,7 @@ game_start() {
     echo "scarcityfree gameserver is running!"
   else
     echo "starting scarcityfree minecraft server..."
-    mine_user "cd $BUKKPATH ; screen -h $liness -dmS $screenNAME $RUNME"
+    mine_user "cd ~mine/minerscraft/run/ ; screen -S screenNAME ./run"
     sleep 4
     if pgrep -u $usern -f $buckproc > /dev/null
     then
@@ -139,12 +133,12 @@ game_cmd() {
   command="$1";
   if pgrep -u $usern -f $buckproc > /dev/null
   then
-    pre_log_length=`wc -l "$BUKKPATH/logs/latest.log" | awk '{print $1}'`
+    pre_log_length=`wc -l "/home/mine/minerscraft/run/logs/latest.log" | awk '{print $1}'`
     echo "$buckproc is running... executing command"
     as_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"$command\"\015'"
     sleep .1 # assumes that the command will run and print to the log file in less than .1 seconds
     # print output
-    tail -n $[`wc -l "$BUKKPATH/logs/latest.log" | awk '{print $1}'`-$pre_log_length] "$BUKKPATH/logs/latest.log"
+    tail -n $[`wc -l "/home/mine/minerscraft/run/logs/latest.log" | awk '{print $1}'`-$pre_log_length] "/home/mine/minerscraft/run/logs/latest.log"
   fi
 }
 
