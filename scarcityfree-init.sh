@@ -8,8 +8,8 @@
 # Required-Stop:  $local_fs $remote_fs
 # Should-Start:   $network
 # Should-Stop:    $network
-# Default-Start:  2 3 4 5
-# Default-Stop:   0 1 6
+# Default-Start:  
+# Default-Stop:   
 # Short-Description:    scarcityfree.com bukkit gameserver
 # Description:    starts/restarts/backs-up/stops bukkit buckproc
 ### END INIT INFO
@@ -24,9 +24,13 @@ MINHEAP=1300
 RUNME='java -Xmx${MAXHEAP}M -Xms${MINHEAP}M -jar ${buckloc} ${options}'
 
 mine_user() {
-#   su - ${usern} -s /bin/bash -c "$1"
-## ^-- is broken with with my methods just make script run as mine user.
-    /bin/bash -c "$1"    
+whoami=`whoami`
+if [ $whoami = mine ]
+  then
+    /bin/bash -c "echo test"
+  else
+    echo "wrong user"
+fi
 }
 
 game_start() {
