@@ -16,7 +16,6 @@
 
 buckloc="/home/mine/minerscraft/run/bucket.jar"
 buckproc="java"
-screenNAME="scarcityfree-init"
 options='nogui'
 usern="mine"
 WORLD="survival"
@@ -36,7 +35,7 @@ game_start() {
     echo "scarcityfree gameserver is running!"
   else
     echo "starting scarcityfree minecraft server..."
-    mine_user "cd ~mine/minerscraft/run/ ; screen -S screenNAME ./run"
+    mine_user "cd ~mine/minerscraft/run/ ; screen -S gameserverscreen ./run"
     sleep 4
     if pgrep -u $usern -f $buckproc > /dev/null
     then
@@ -51,9 +50,9 @@ game_saveoff() {
   if pgrep -u $usern -f $buckproc > /dev/null
   then
     echo "$buckproc is running... suspending saves"
-    mine_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"say BACKUP STARTING. world will be readonly momentarily...\"\015'"
-    mine_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"save-off\"\015'"
-    mine_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"save-all\"\015'"
+    mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"say BACKUP STARTING. world will be readonly momentarily...\"\015'"
+    mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"save-off\"\015'"
+    mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"save-all\"\015'"
     sync
     sleep 10
   else
@@ -65,8 +64,8 @@ game_saveon() {
   if pgrep -u $usern -f $buckproc > /dev/null
   then
     echo "$buckproc is running... re-enabling saves"
-    mine_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"save-on\"\015'"
-    mine_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"say BACKUP ENDED...  you may dig,mine,build, and wreck again.. \"\015'"
+    mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"save-on\"\015'"
+    mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"say BACKUP ENDED...  you may dig,mine,build, and wreck again.. \"\015'"
   else
     echo 'gameserver not running'
   fi
@@ -76,16 +75,16 @@ game_stop() {
   if pgrep -u $usern -f $buckproc > /dev/null
   then
     echo "Stopping $buckproc"
-    mine_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"say SHUTTING DOWN IN 10 SECONDS. Saving map...\"\015'"
-    mine_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"save-all\"\015'"
+    mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"say SHUTTING DOWN IN 10 SECONDS. Saving map...\"\015'"
+    mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"save-all\"\015'"
     sleep 7
-    mine_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"say SHUTTING DOWN IN 3 SECONDS. Saving map...\"\015'"
+    mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"say SHUTTING DOWN IN 3 SECONDS. Saving map...\"\015'"
     sleep 1
-    mine_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"say SHUTTING DOWN IN 2 SECONDS. Saving map...\"\015'"
+    mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"say SHUTTING DOWN IN 2 SECONDS. Saving map...\"\015'"
     sleep 1
-    mine_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"say SHUTTING DOWN IN 1 SECONDS. Saving map...\"\015'"
+    mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"say SHUTTING DOWN IN 1 SECONDS. Saving map...\"\015'"
     sleep 1
-    mine_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"stop\"\015'"
+    mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"stop\"\015'"
     sleep 7
   else
     echo 'gameserver not running'
@@ -135,7 +134,7 @@ game_cmd() {
   then
     pre_log_length=`wc -l "/home/mine/minerscraft/run/logs/latest.log" | awk '{print $1}'`
     echo "$buckproc is running... executing command"
-    as_user "screen -p 0 -S ${screenNAME} -X eval 'stuff \"$command\"\015'"
+    mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"$command\"\015'"
     sleep .1 # assumes that the command will run and print to the log file in less than .1 seconds
     # print output
     tail -n $[`wc -l "/home/mine/minerscraft/run/logs/latest.log" | awk '{print $1}'`-$pre_log_length] "/home/mine/minerscraft/run/logs/latest.log"
@@ -167,7 +166,7 @@ case "$1" in
       echo "gameserver is not running."
     fi
     ;;
-  command)
+  cmd)
     if [ $# -gt 1 ]
     then
       shift
