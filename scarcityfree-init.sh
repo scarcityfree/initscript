@@ -27,7 +27,7 @@ mine_user() {
 whoami=`whoami`
 if [ $whoami = mine ]
   then
-    /bin/bash -c "echo test"
+    /bin/bash -c "$1"
   else
     echo "wrong user"
 fi
