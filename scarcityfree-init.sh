@@ -139,8 +139,8 @@ game_cmd() {
     pre_log_length=`wc -l "/home/mine/minerscraft/run/logs/latest.log" | awk '{print $1}'`
     echo "$buckproc is running... executing command"
     mine_user "screen -p 0 -S gameserverscreen -X eval 'stuff \"$command\"\015'"
-    sleep 1 # assumes that the command will run and print to the log file in less than .1 seconds
-    # print output
+    sleep 2 # time to print to console....
+    #print out
     tail -n $[`wc -l "/home/mine/minerscraft/run/logs/latest.log" | awk '{print $1}'`-$pre_log_length] "/home/mine/minerscraft/run/logs/latest.log"
   fi
 }
