@@ -1,6 +1,6 @@
 #!/bin/bash
-# /etc/init.d/scarcityfree-init.sh
-# version 0 2015-07-25
+
+version='#0.2 2015-07-26'
 # 
 ### BEGIN INIT INFO
 # Provides:   scarcityfree-init.sh
@@ -170,6 +170,9 @@ case "$1" in
       echo "gameserver is not running."
     fi
     ;;
+  version)
+    echo "$version"
+    ;;
   cmd)
     if [ $# -gt 1 ]
     then
@@ -180,7 +183,7 @@ case "$1" in
     fi
     ;;
   *)
-    echo 'Usage: $0 {start|stop|#backup|status|restart|cmd}'
+    echo "sage: $0 {start|stop|#backup|status|restart|cmd}"
     echo 'goodluck :)'
     ;;
 esac
