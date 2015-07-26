@@ -174,13 +174,7 @@ case "$1" in
     echo "$version"
     ;;
   cmd)
-    if [ $# -gt 1 ]
-    then
-      shift
-      game_cmd "$*"
-    else
-      echo "you did someting wrong..."
-    fi
+    game_cmd "$*"
     ;;
   lag) 
     game_cmd "lagg tps"
