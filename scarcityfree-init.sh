@@ -183,14 +183,8 @@ case "$1" in
     fi
     ;;
   lag) 
-    if [ $# -gt 1 ]
-    then
-      shift
-      game_cmd "lagg tps"
-      game_cmd "lagg check"
-    else
-      echo "you did someting wrong..."
-    fi
+    game_cmd "lagg tps"
+    game_cmd "lagg check"
     ;;
   *)
     echo "sage: $0 {start|stop|#backup|status|restart|cmd}"
