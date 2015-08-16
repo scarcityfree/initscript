@@ -39,7 +39,7 @@ game_start() {
     echo "scarcityfree gameserver is running!"
   else
     echo "starting scarcityfree minecraft server..."
-    mine_user "cd ~mine/minerscraft/run/ ; screen -S gameserverscreen ./run"
+    mine_user ". ~/.profile ; cd ~mine/minerscraft/run/ ; screen -dmS gameserverscreen ./run"
     sleep 4
     if pgrep -u $usern -f $buckproc > /dev/null
     then
