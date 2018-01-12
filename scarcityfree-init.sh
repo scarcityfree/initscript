@@ -27,7 +27,7 @@ mine_user() {
 whoami=`whoami`
 if [ $whoami = mine ]
   then
-    /bin/bash -c "$1"
+    /bin/bash -c "$@"
   else
     echo "wrong user"
 fi
@@ -133,7 +133,7 @@ mine_user "echo \"completed backup essential_back.${nameof,1}.t\" >> /home/mine/
 }
 
 game_cmd() {
-  command="$1";
+  command="$@";
   if pgrep -u $usern -f $buckproc > /dev/null
   then
     pre_log_length=`wc -l "/home/mine/minerscraft/run/logs/latest.log" | awk '{print $1}'`
