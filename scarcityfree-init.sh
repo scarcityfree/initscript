@@ -14,18 +14,18 @@ version='#0.2 2015-07-26'
 # Description:    starts/restarts/backs-up/stops bukkit buckproc
 ### END INIT INFO
 
-buckloc="/home/mine/minerscraft/run/bucket.jar"
-buckproc="java"
-options='nogui'
-usern="mine"
-WORLD="survival"
-MAXHEAP=1300
-MINHEAP=1300
-RUNME='java -Xmx${MAXHEAP}M -Xms${MINHEAP}M -jar ${buckloc} ${options}'
+#export buckloc="/home/mine/minerscraft/run/server.jar"
+[[ -z "${buckloc}" ]] &&  export buckloc="/home/mine/minerscraft/run/bucket.jar"
+[[ -z "${buckproc}" ]] &&  export buckproc="java"
+[[ -z "${options}" ]] &&  export options='nogui'
+[[ -z "${usern}" ]] &&  export usern="mine"
+[[ -z "${WORLD}" ]] &&  export WORLD="survival"
+[[ -z "${MAXHEAP}" ]] &&  export MAXHEAP=2000
+[[ -z "${MINHEAP}" ]] &&  export MINHEAP=2000
+[[ -z "${RUNME}" ]] &&  export RUNME='java -Xmx${MAXHEAP}M -Xms${MINHEAP}M -jar ${buckloc} ${options}'
 
 mine_user() {
-whoami=`whoami`
-if [ $whoami = mine ]
+if [ $(whoami) = mine ]
   then
     /bin/bash -c "$@"
   else
